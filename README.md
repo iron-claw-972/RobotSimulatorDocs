@@ -14,6 +14,11 @@ rightMotor = robot.getMotor("motor.right")
 
 leftEncoder = leftMotor.getPositionSensor()
 rightEncoder = rightMotor.getPositionSensor()
+
+leftEncoder.enable(100)
+rightEncoder.enable(100)
+
+
 ```
 
 ## Moving the Robot
