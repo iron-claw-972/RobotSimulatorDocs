@@ -51,6 +51,7 @@ time=0
 while robot.step(timeStep) != -1:
     rightMotor.setVelocity(target*math.pi*2)
     leftMotor.setVelocity(target*math.pi*2)
+    print(leftEncoder.getValue(),rightEncoder.getValue()) #print encoder readouts
     time+=1
 ```
 
