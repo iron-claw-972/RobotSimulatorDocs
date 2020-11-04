@@ -7,7 +7,7 @@ from controller import Robot
 from controller import Compass
 import math
 robot = Robot()
-compass = Compass()
+compass = robot.getCompass("compass")
 
 timeStep = int(robot.getBasicTimeStep())
 
@@ -17,12 +17,12 @@ rightMotor = robot.getMotor("motor.right")
 leftEncoder = leftMotor.getPositionSensor()
 rightEncoder = rightMotor.getPositionSensor()
 
-leftEncoder.enable(100)
-rightEncoder.enable(100)
-compass.enable(100)
+leftEncoder.enable(timestep)
+rightEncoder.enable(timestep)
+compass.enable(timestep)
 
 def get_bearing_in_degrees():
-  north = compass.get_values();
+  north = compass.getValues();
   rad = math.atan2(north[0], north[2])
   bearing = (rad - 1.5708) / math.pi * 180.0
   if (bearing < 0.0):
