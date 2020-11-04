@@ -7,6 +7,8 @@ from controller import Robot
 from controller import Compass
 import math
 robot = Robot()
+compass = Compass()
+
 timeStep = int(robot.getBasicTimeStep())
 
 leftMotor = robot.getMotor("motor.left")
@@ -17,7 +19,15 @@ rightEncoder = rightMotor.getPositionSensor()
 
 leftEncoder.enable(100)
 rightEncoder.enable(100)
+compass.enable(100)
 
+def get_bearing_in_degrees():
+  north = compass.get_values();
+  rad = math.atan2(north[0], north[2])
+  bearing = (rad - 1.5708) / math.pi * 180.0
+  if (bearing < 0.0):
+    bearing = bearing + 360.0
+  return bearing
 
 ```
 
@@ -35,9 +45,11 @@ target = 0.5  #target is to move at half a wheel rotations every second
 leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
 rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
 
+time=0
 while robot.step(timeStep) != -1:
     rightMotor.setVelocity(target*math.pi*2)
     leftMotor.setVelocity(target*math.pi*2)
+    time+=1
 ```
 
 
