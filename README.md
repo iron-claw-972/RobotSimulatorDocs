@@ -43,7 +43,7 @@ rightMotor.setPosition(target*math.pi*2)#moves right motor 5 rotations
 
 ### Move the wheels at a speed
 ```
-target = 0.5  #target is to move at half a wheel rotations every second
+target = 0.5  #target is to move at half a wheel rotation every second
 leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
 rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
 
