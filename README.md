@@ -20,7 +20,7 @@ leftEncoder.enable(timeStep)
 rightEncoder.enable(timeStep)
 
 ```
-## Initialize Compass
+## Initialize Compass (not available on square challenge)
 ```
 compass = robot.getCompass("compass")
 compass.enable(timeStep)
