@@ -10,8 +10,8 @@ robot = Robot()
 
 timeStep = int(robot.getBasicTimeStep())
 
-leftMotor = robot.getMotor("motor.left")
-rightMotor = robot.getMotor("motor.right")
+leftMotor = robot.getMotor("motor.left") #left wheel if in square path
+rightMotor = robot.getMotor("motor.right") #right wheel if in square path
 
 leftEncoder = leftMotor.getPositionSensor()
 rightEncoder = rightMotor.getPositionSensor()
