@@ -55,4 +55,21 @@ while robot.step(timeStep) != -1:
     time+=1
 ```
 
+### Turning to an angle
+speed = 0.5  #target is to move at half a wheel rotation every second
+target_angle = 180
+leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+
+while robot.step(timeStep) != -1:
+    angle = get_bearing_in_degrees()
+    if angle<targetAngle:
+        rightMotor.setVelocity(speed*math.pi*2)
+        leftMotor.setVelocity(-speed*math.pi*2)
+    if angle>targetAngle:
+        rightMotor.setVelocity(-speed*math.pi*2)
+        leftMotor.setVelocity(speed*math.pi*2)
+    if math.abs(targetAngle-angle)<3:
+        break
+    
 
