@@ -78,3 +78,34 @@ while robot.step(timeStep) != -1:
         break
     
 ```
+
+### Abstraction
+
+
+We don't want to write that code every time we want to turn to an angle. Instead, we can write a reusable function:
+```
+def turn(leftMotor, rightMotor, target_angle, speed, tolerance):
+  leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+  rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+  while robot.step(timeStep) != -1:
+      angle = get_bearing_in_degrees()
+      if angle>target_angle:
+          rightMotor.setVelocity(speed*math.pi*2)
+          leftMotor.setVelocity(-speed*math.pi*2)
+      if angle<target_angle:
+          rightMotor.setVelocity(-speed*math.pi*2)
+          leftMotor.setVelocity(speed*math.pi*2)
+      if abs(target_angle-angle)<tolerance:
+          print(abs(target_angle-angle))
+          rightMotor.setVelocity(0)
+          leftMotor.setVelocity(0)
+          break
+    
+```
+
+And then when we want to turn, we can call it by typing:
+
+```
+turn(leftMotor, rightMotor, 180, 0.3, .1)
+```
+
