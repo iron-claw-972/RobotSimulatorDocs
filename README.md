@@ -32,6 +32,22 @@ def get_bearing_in_degrees():
     bearing = bearing + 360.0
   return bearing
 ```
+## Initialize Distance Sensors
+```
+# Get frontal distance sensors.
+outerLeftSensor = robot.getDistanceSensor("prox.horizontal.0")
+centralLeftSensor = robot.getDistanceSensor("prox.horizontal.1")
+centralSensor = robot.getDistanceSensor("prox.horizontal.2")
+centralRightSensor = robot.getDistanceSensor("prox.horizontal.3")
+outerRightSensor = robot.getDistanceSensor("prox.horizontal.4")
+
+# Enable distance sensors.
+outerLeftSensor.enable(timeStep)
+centralLeftSensor.enable(timeStep)
+centralSensor.enable(timeStep)
+centralRightSensor.enable(timeStep)
+outerRightSensor.enable(timeStep)
+```
 
 ## Moving the Robot
 ### Move the wheels to a position
