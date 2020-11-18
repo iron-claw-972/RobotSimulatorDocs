@@ -122,7 +122,7 @@ def turn(target_angle, speed, tolerance):
 And then when we want to turn, we can call it by typing:
 
 ```
-turn(leftMotor, rightMotor, 180, 0.3, .1)
+turn(180, 0.3, .1)
 ```
 
 ## Getting Distance Sensor Readings (starts at zero, increases when object is close)
