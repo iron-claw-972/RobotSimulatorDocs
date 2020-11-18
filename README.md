@@ -100,7 +100,7 @@ while robot.step(timeStep) != -1:
 
 We don't want to write that code every time we want to turn to an angle. Instead, we can write a reusable function:
 ```
-def turn(leftMotor, rightMotor, target_angle, speed, tolerance):
+def turn(target_angle, speed, tolerance):
   leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
   rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
   while robot.step(timeStep) != -1:
