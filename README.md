@@ -125,3 +125,13 @@ And then when we want to turn, we can call it by typing:
 turn(leftMotor, rightMotor, 180, 0.3, .1)
 ```
 
+## Getting Distance Sensor Readings (starts at zero, increases when object is close)
+```
+outerLeftSensorValue = outerLeftSensor.getValue() / 360
+centralLeftSensorValue = centralLeftSensor.getValue() / 360
+centralSensorValue = centralSensor.getValue() / 360
+centralRightSensorValue = centralRightSensor.getValue() / 360
+outerRightSensorValue = outerRightSensor.getValue() / 360
+```
+
+
