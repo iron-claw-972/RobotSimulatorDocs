@@ -56,6 +56,8 @@ while robot.step(timeStep) != -1:
 ```
 
 ### Turning to an angle
+
+```
 speed = 0.5  #target is to move at half a wheel rotation every second
 target_angle = 180
 leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
@@ -72,4 +74,4 @@ while robot.step(timeStep) != -1:
     if math.abs(targetAngle-angle)<3:
         break
     
-
+```
