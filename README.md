@@ -134,4 +134,17 @@ centralRightSensorValue = centralRightSensor.getValue() / 360
 outerRightSensorValue = outerRightSensor.getValue() / 360
 ```
 
+## Simplified Obstacle Avoidance (Part 0)
+```
+sensor_conversion_constant = 3600
+for segment in range(2000):
+    move(segment*.8,.95,.1) #distance speed tolerance
+    outerLeftSensorValue = outerLeftSensor.getValue() / sensor_conversion_constant
+    centralLeftSensorValue = centralLeftSensor.getValue() / sensor_conversion_constant
+    centralSensorValue = centralSensor.getValue() / sensor_conversion_constant
+    centralRightSensorValue = centralRightSensor.getValue() / sensor_conversion_constant
+    outerRightSensorValue = outerRightSensor.getValue() / sensor_conversion_constant
+    if centralSensorValue > 0.1 or outerLeftSensorValue > 0.1 or centralLeftSensorValue > 0.1 or centralRightSensorValue > 0.1 or outerRightSensorValue > 0.1:
+        break
+ ```
 
