@@ -119,6 +119,25 @@ def turn(target_angle, speed, tolerance):
     
 ```
 
+```
+def move(target_distance, speed, tolerance):
+    leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+    rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+    while robot.step(timeStep) != -1:
+        distance = (leftEncoder.getValue()+rightEncoder.getValue())/2
+        if distance<target_distance:
+            rightMotor.setVelocity(speed*math.pi*2)
+            leftMotor.setVelocity(speed*math.pi*2)
+        if distance>target_distance:
+            rightMotor.setVelocity(-speed*math.pi*2)
+            leftMotor.setVelocity(-speed*math.pi*2)
+        if abs(distance-target_distance)<tolerance:
+            rightMotor.setVelocity(0)
+            leftMotor.setVelocity(0)
+            break
+            
+```
+
 And then when we want to turn, we can call it by typing:
 
 ```
