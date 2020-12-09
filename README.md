@@ -153,7 +153,7 @@ centralRightSensorValue = centralRightSensor.getValue() / 360
 outerRightSensorValue = outerRightSensor.getValue() / 360
 ```
 
-## Simplified Obstacle Avoidance (Part 0)
+## Simplified Obstacle Avoidance (Part 0).
 ```
 sensor_conversion_constant = 3600
 for segment in range(2000):
@@ -166,4 +166,132 @@ for segment in range(2000):
     if centralSensorValue > 0.1 or outerLeftSensorValue > 0.1 or centralLeftSensorValue > 0.1 or centralRightSensorValue > 0.1 or outerRightSensorValue > 0.1:
         break
  ```
+ 
+## Simplified Obstacle Avoidance (Part 1)
+```
+sensor_conversion_constant = 3600
+for segment in range(2000):
+    move(segment*.8,.95,.1) #distance speed tolerance
+    outerLeftSensorValue = outerLeftSensor.getValue() / sensor_conversion_constant
+    centralLeftSensorValue = centralLeftSensor.getValue() / sensor_conversion_constant
+    centralSensorValue = centralSensor.getValue() / sensor_conversion_constant
+    centralRightSensorValue = centralRightSensor.getValue() / sensor_conversion_constant
+    outerRightSensorValue = outerRightSensor.getValue() / sensor_conversion_constant
+    if centralSensorValue > 0.1 or outerLeftSensorValue > 0.1 or centralLeftSensorValue > 0.1:
+        turn(130, 0.95,5)
+    if centralRightSensorValue > 0.1 or outerRightSensorValue > 0.1:
+        turn(40, 0.95,5)
+ ```
+ 
+ 
+## Full Obstacle Avoidance Example. Not the fastest, can you make a faster one?
+ 
+ ```
+from controller import Robot
+from controller import Compass
+import math
+robot = Robot()
+compass = robot.getCompass("compass")
+
+timeStep = int(robot.getBasicTimeStep())
+
+leftMotor = robot.getMotor("motor.left")
+rightMotor = robot.getMotor("motor.right")
+
+leftEncoder = leftMotor.getPositionSensor()
+rightEncoder = rightMotor.getPositionSensor()
+
+# Get frontal distance sensors.
+outerLeftSensor = robot.getDistanceSensor("prox.horizontal.0")
+centralLeftSensor = robot.getDistanceSensor("prox.horizontal.1")
+centralSensor = robot.getDistanceSensor("prox.horizontal.2")
+centralRightSensor = robot.getDistanceSensor("prox.horizontal.3")
+outerRightSensor = robot.getDistanceSensor("prox.horizontal.4")
+
+# Enable distance sensors.
+outerLeftSensor.enable(timeStep)
+centralLeftSensor.enable(timeStep)
+centralSensor.enable(timeStep)
+centralRightSensor.enable(timeStep)
+outerRightSensor.enable(timeStep)
+
+leftEncoder.enable(timeStep)
+rightEncoder.enable(timeStep)
+compass.enable(timeStep)
+
+def get_bearing_in_degrees():
+  north = compass.getValues();
+  rad = math.atan2(north[0], north[2])
+  bearing = (rad - 1.5708) / math.pi * 180.0
+  if (bearing < 0.0):
+    bearing = bearing + 360.0
+  return bearing
+
+
+def move(target_distance, speed, tolerance):
+    leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+    rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+    while robot.step(timeStep) != -1:
+        distance = (leftEncoder.getValue()+rightEncoder.getValue())/2
+        if distance<target_distance:
+            rightMotor.setVelocity(speed*math.pi*2)
+            leftMotor.setVelocity(speed*math.pi*2)
+        if distance>target_distance:
+            rightMotor.setVelocity(-speed*math.pi*2)
+            leftMotor.setVelocity(-speed*math.pi*2)
+        if abs(distance-target_distance)<tolerance:
+            rightMotor.setVelocity(0)
+            leftMotor.setVelocity(0)
+            break
+    
+def turn(target_angle, speed, tolerance):
+  leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+  rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
+  while robot.step(timeStep) != -1:
+      angle = get_bearing_in_degrees()
+      if angle>target_angle:
+          rightMotor.setVelocity(speed*math.pi*2)
+          leftMotor.setVelocity(-speed*math.pi*2)
+      if angle<target_angle:
+          rightMotor.setVelocity(-speed*math.pi*2)
+          leftMotor.setVelocity(speed*math.pi*2)
+      if abs(target_angle-angle)<tolerance:
+          rightMotor.setVelocity(0)
+          leftMotor.setVelocity(0)
+          break
+      
+      
+total_left_sensed = 0
+total_right_sensed = 0
+rebound_constant = 0.9 #making it higher will make the robot steer away from the obtacle for a longer time
+sensor_conversion_constant = 3600
+side_responsiveness_constant = .95
+
+def clamp(n, minn, maxn):
+    return max(min(maxn, n), minn)
+
+for segment in range(2000):
+    move(segment*.75,.95,.1)
+    
+    current_angle = (90-get_bearing_in_degrees())
+    outerLeftSensorValue = outerLeftSensor.getValue() / sensor_conversion_constant
+    centralLeftSensorValue = centralLeftSensor.getValue() / sensor_conversion_constant
+    centralSensorValue = centralSensor.getValue() / sensor_conversion_constant
+    centralRightSensorValue = centralRightSensor.getValue() / sensor_conversion_constant
+    outerRightSensorValue = outerRightSensor.getValue() / sensor_conversion_constant
+    
+    total_left_sensed = (outerLeftSensorValue*side_responsiveness_constant + centralLeftSensorValue) + rebound_constant * total_left_sensed
+    total_right_sensed = (centralRightSensorValue + outerRightSensorValue*side_responsiveness_constant) + rebound_constant * total_right_sensed
+    
+    if total_left_sensed>total_right_sensed:
+        total_left_sensed += centralSensorValue
+    else:
+        total_right_sensed += centralSensorValue
+    
+    target_angle = 90+90*clamp(total_left_sensed - total_right_sensed, -1.4, 1.4)    
+
+    turn(target_angle if target_angle>=0 else target_angle+360, .95, 5)
+
+
+```
 
