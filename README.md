@@ -1,3 +1,62 @@
+# Microbit
+
+## Snake
+```
+
+points = [[2,2],[2,2],[2,2],[2,2]]
+points_length = 4
+
+def limit(number):
+    if number<0:
+        number=0
+    if number>4:
+        number=4
+    return number
+
+
+def move(points, right, down):
+    new_point = [points[points_length-1][0],points[points_length-1][1]]
+    new_point[0] = limit(new_point[0]+right)
+    new_point[1] = limit(new_point[1]+down)
+
+    points=points[1:]
+    points.append(new_point)
+    return points
+
+def clear_grid():
+    for y in range(5):
+        for x in range(5):
+            led.unplot(x, y)
+
+def display(points):
+    for point in points:
+        led.plot(point[0], point[1])
+
+while True:
+    pitch = input.rotation(Rotation.PITCH)
+    if pitch<0:
+        right=-1
+    elif pitch>0:
+        right=1
+    else:
+        right=0
+
+    roll = input.rotation(Rotation.ROLL)
+    if roll<0:
+        down=-1
+    elif roll>0:
+        down=1
+    else:
+        down=0
+
+    points = move(points,down,right)
+    clear_grid()
+    display(points)
+    basic.pause(100)
+
+```
+
+
 # Robot Simulator
 How to use the simulator
 
