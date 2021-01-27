@@ -40,7 +40,7 @@ while True:
 
 
 ## Snake
-```
+```python
 
 points = [[2,2],[2,2],[2,2],[2,2]]
 points_length = 4
@@ -100,7 +100,7 @@ while True:
 How to use the simulator
 
 ## Initializing Your Robot
-```
+```python
 from controller import Robot
 from controller import Compass
 import math
@@ -119,7 +119,7 @@ rightEncoder.enable(timeStep)
 
 ```
 ## Initialize Compass (not available on square challenge)
-```
+```python
 compass = robot.getCompass("compass")
 compass.enable(timeStep)
 def get_bearing_in_degrees():
@@ -131,7 +131,7 @@ def get_bearing_in_degrees():
   return bearing
 ```
 ## Initialize Distance Sensors
-```
+```python
 # Get frontal distance sensors.
 outerLeftSensor = robot.getDistanceSensor("prox.horizontal.0")
 centralLeftSensor = robot.getDistanceSensor("prox.horizontal.1")
@@ -149,14 +149,14 @@ outerRightSensor.enable(timeStep)
 
 ## Moving the Robot
 ### Move the wheels to a position
-```
+```python
 target = 5  #target is 5 wheel rotations
 leftMotor.setPosition(target*math.pi*2) #moves left motor 5 rotations
 rightMotor.setPosition(target*math.pi*2)#moves right motor 5 rotations
 ```
 
 ### Move the wheels at a speed
-```
+```python
 target = 0.5  #target is to move at half a wheel rotation every second
 leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
 rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
@@ -171,7 +171,7 @@ while robot.step(timeStep) != -1:
 
 ### Turning to an angle
 
-```
+```python
 speed = 0.3  #target is to move at half a wheel rotation every second
 target_angle = 180
 leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
@@ -197,7 +197,7 @@ while robot.step(timeStep) != -1:
 
 
 We don't want to write that code every time we want to turn to an angle. Instead, we can write a reusable function:
-```
+```python
 def turn(target_angle, speed, tolerance):
   leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
   rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
@@ -217,7 +217,7 @@ def turn(target_angle, speed, tolerance):
     
 ```
 
-```
+```python
 def move(target_distance, speed, tolerance):
     leftMotor.setPosition(float('inf')) #allows us to control velocity instead of position
     rightMotor.setPosition(float('inf')) #allows us to control velocity instead of position
@@ -238,12 +238,12 @@ def move(target_distance, speed, tolerance):
 
 And then when we want to turn, we can call it by typing:
 
-```
+```python
 turn(180, 0.3, .1)
 ```
 
 ## Getting Distance Sensor Readings (starts at zero, increases when object is close)
-```
+```python
 outerLeftSensorValue = outerLeftSensor.getValue() / 360
 centralLeftSensorValue = centralLeftSensor.getValue() / 360
 centralSensorValue = centralSensor.getValue() / 360
@@ -252,7 +252,7 @@ outerRightSensorValue = outerRightSensor.getValue() / 360
 ```
 
 ## Simplified Obstacle Avoidance (Part 0).
-```
+```python
 sensor_conversion_constant = 3600
 for segment in range(2000):
     move(segment*.8,.95,.1) #distance speed tolerance
@@ -266,7 +266,7 @@ for segment in range(2000):
  ```
  
 ## Simplified Obstacle Avoidance (Part 1)
-```
+```python
 sensor_conversion_constant = 3600
 for segment in range(2000):
     move(segment*.8,.95,.1) #distance speed tolerance
@@ -284,7 +284,7 @@ for segment in range(2000):
  
 ## Full Obstacle Avoidance Example. Not the fastest, can you make a faster one?
  
- ```
+ ```python
 from controller import Robot
 from controller import Compass
 import math
