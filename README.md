@@ -1,5 +1,44 @@
 # Microbit
 
+## Cutebot Systems Check Code
+```python
+# Cutebot Systems Check
+# A simple script to make sure that the cutebot is working properly
+sonar = 0
+
+
+# Set motors to max speed
+cuteBot.motors(100, 100)
+basic.pause(1000)
+cuteBot.stopcar()
+basic.pause(1000)
+
+# Set motors to max reverse speed
+cuteBot.motors(-100, -100)
+basic.pause(1000)
+cuteBot.stopcar()
+basic.pause(1000)
+
+# Turn
+cuteBot.motors(0, -50)
+basic.pause(1000)
+cuteBot.stopcar()
+
+# Check compass
+basic.show_arrow(ArrowNames.NORTH)
+basic.pause(2000)
+basic.clear_screen()
+
+# Check the ultrasonic sensors
+while True:
+    sonar = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS)
+    if sonar <= 20:
+        basic.show_icon(IconNames.HEART)
+    else:
+        basic.show_icon(IconNames.SAD)
+```
+
+
 ## Snake
 ```
 
