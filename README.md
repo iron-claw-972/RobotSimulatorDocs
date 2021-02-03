@@ -4,18 +4,21 @@
 
 ```python
 
+
 MOVING_FORWARDS = True
 MOVING_BACKWARDS = False
 STOPPED = False
 MOVING_BACKWARDS = False
 TURNING_LEFT = False
 TURNING_RIGHT = False
+TURN_90 = False
 DEBRIS_DETECTED = False
 LINE_DETECTED = False
 BEEPING = False
 HEADLIGHTS_ON = False
 CURRENT_TIME = input.running_time()
-TURNING_TIME = 0;
+ACTION_START_TIME = 0;
+ACTION_RUN_TIME = 0;
 
 while True:
     #update sensors
@@ -26,13 +29,31 @@ while True:
 
     #updates the state of the robot based on previous states and sensors
     ###############################
-    if DEBRIS_DETECTED: #control motors
-        MOVING_BACKWARDS = True;
-        MOVING_FORWARDS = False;
-    else:
+    #synchronous actions
+    while (CURRENT_TIME-ACTION_START_TIME)>ACTION_RUN_TIME:
         MOVING_BACKWARDS = False;
         MOVING_FORWARDS = True;
+        TURNING_LEFT = False;
+        TURNING_RIGHT = False; #default states
+
+        if DEBRIS_DETECTED: 
+            ACTION_START_TIME = input.running_time()
+            ACTION_RUN_TIME = 500; #goes backwards for half a second
+            MOVING_BACKWARDS = True;
+            MOVING_FORWARDS = False;
+            TURN_90 = True; #turn 90 degrees after going backwards
+            break
+        if TURN_90:
+            ACTION_START_TIME = input.running_time()
+            ACTION_RUN_TIME = 500; #turns for half a second
+            MOVING_BACKWARDS = False;
+            MOVING_FORWARDS = False;
+            TURNING_LEFT = True;
+            TURN_90 = False; #we are done turning
+            break
+        break
     
+    #async actions
     HEADLIGHTS_ON = LINE_DETECTED #control headlights
 
     #runs things based on state
@@ -40,21 +61,18 @@ while True:
     if STOPPED: #run motors
         cuteBot.motors(0,0)
     elif TURNING_LEFT:
-        cuteBot.motors(0,90)
+        cuteBot.motors(0,40)
     elif TURNING_RIGHT:
-        cuteBot.motors(90,0)
+        cuteBot.motors(40,0)
     elif MOVING_FORWARDS:
-        cuteBot.motors(90,90)
+        cuteBot.motors(40,40)
     elif MOVING_BACKWARDS:
-        cuteBot.motors(-90,-90)
+        cuteBot.motors(-40,-40)
 
     if HEADLIGHTS_ON: #run headlights
         cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 255, 255, 0)
     else:
         cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 0, 0, 0)
-    
-
-
 
 ```
 
