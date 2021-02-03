@@ -4,7 +4,6 @@
 
 ```python
 
-
 MOVING_FORWARDS = True
 MOVING_BACKWARDS = False
 STOPPED = False
@@ -20,6 +19,14 @@ CURRENT_TIME = input.running_time()
 ACTION_START_TIME = 0;
 ACTION_RUN_TIME = 0;
 
+def default_motion_states():
+    MOVING_FORWARDS = True
+    MOVING_BACKWARDS = False
+    STOPPED = False
+    MOVING_BACKWARDS = False
+    TURNING_LEFT = False
+    TURNING_RIGHT = False
+
 while True:
     #update sensors
     ##############################
@@ -29,19 +36,19 @@ while True:
 
     #updates the state of the robot based on previous states and sensors
     ###############################
-    #synchronous actions
+    
     while (CURRENT_TIME-ACTION_START_TIME)>ACTION_RUN_TIME:
-        MOVING_BACKWARDS = False;
-        MOVING_FORWARDS = True;
-        TURNING_LEFT = False;
-        TURNING_RIGHT = False; #default states
-
+        #set default actions here
+        #example, if line detected, turn, otherwise go straight.
+        
+        #synchronous actions
         if DEBRIS_DETECTED: 
             ACTION_START_TIME = input.running_time()
             ACTION_RUN_TIME = 500; #goes backwards for half a second
             MOVING_BACKWARDS = True;
             MOVING_FORWARDS = False;
             TURN_90 = True; #turn 90 degrees after going backwards
+            default_motion_states()
             break
         if TURN_90:
             ACTION_START_TIME = input.running_time()
@@ -50,6 +57,7 @@ while True:
             MOVING_FORWARDS = False;
             TURNING_LEFT = True;
             TURN_90 = False; #we are done turning
+            default_motion_states()
             break
         break
     
@@ -73,7 +81,7 @@ while True:
         cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 255, 255, 0)
     else:
         cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 0, 0, 0)
-
+    
 ```
 
 
