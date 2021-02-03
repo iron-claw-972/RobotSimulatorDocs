@@ -10,7 +10,7 @@ STOPPED = False
 MOVING_BACKWARDS = False
 TURNING_LEFT = False
 TURNING_RIGHT = False
-TURN_90 = False
+
 DEBRIS_DETECTED = False
 LINE_DETECTED = False
 BEEPING = False
@@ -18,6 +18,12 @@ HEADLIGHTS_ON = False
 CURRENT_TIME = input.running_time()
 ACTION_START_TIME = 0;
 ACTION_RUN_TIME = 0;
+
+#synchronous actions
+TURN_90 = False
+MOVE_BACK = False
+
+
 
 def default_motion_states():
     MOVING_FORWARDS = True
@@ -34,17 +40,27 @@ while True:
     DEBRIS_DETECTED = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS)<10
     LINE_DETECTED = cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)# detects white ground
 
-    #updates the state of the robot based on previous states and sensors
+    #updates the state of the robot
     ###############################
-    
+    #things that should run all the time
+    HEADLIGHTS_ON = LINE_DETECTED #control headlights
+    MOVE_BACK = DEBRIS_DETECTED #move back when debris
+
+    #things that run only when an action isn't running
     while (CURRENT_TIME-ACTION_START_TIME)>ACTION_RUN_TIME:
-        #set default actions here
+        #default behavior
         #example: if line detected, turn, otherwise go straight.
-        #for default actions, you do not need to mess with the time
+        #you do not need to mess with the time
         #these are either based on sensor states or are just set here.
         
+        #<code default behavior here>
+
         #synchronous actions
-        if DEBRIS_DETECTED: 
+        #these run when the action is triggered
+        #they will block the rest of the code in this while loop from running
+        #you can set how long they run for with ACTION_RUN_TIME
+        #they must being with ACTION_START_TIME = input.running_time()
+        if MOVE_BACK: 
             ACTION_START_TIME = input.running_time()
             ACTION_RUN_TIME = 500; #goes backwards for half a second
             MOVING_BACKWARDS = True;
@@ -63,10 +79,9 @@ while True:
             break
         break
     
-    #async actions
-    HEADLIGHTS_ON = LINE_DETECTED #control headlights
 
-    #runs things based on state
+
+    #runs physical components based on state
     ################################
     if STOPPED: #run motors
         cuteBot.motors(0,0)
@@ -83,6 +98,7 @@ while True:
         cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 255, 255, 0)
     else:
         cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 0, 0, 0)
+    
     
 ```
 
