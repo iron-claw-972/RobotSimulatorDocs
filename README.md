@@ -1,5 +1,64 @@
 # Microbit
 
+## Cutebot Code Structure Code
+
+```python
+
+MOVING_FORWARDS = True
+MOVING_BACKWARDS = False
+STOPPED = False
+MOVING_BACKWARDS = False
+TURNING_LEFT = False
+TURNING_RIGHT = False
+DEBRIS_DETECTED = False
+LINE_DETECTED = False
+BEEPING = False
+HEADLIGHTS_ON = False
+CURRENT_TIME = input.running_time()
+TURNING_TIME = 0;
+
+while True:
+    #update sensors
+    ##############################
+    CURRENT_TIME = input.running_time() #update time
+    DEBRIS_DETECTED = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS)<10
+    LINE_DETECTED = cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)# detects white ground
+
+    #updates the state of the robot based on previous states and sensors
+    ###############################
+    if DEBRIS_DETECTED: #control motors
+        MOVING_BACKWARDS = True;
+        MOVING_FORWARDS = False;
+    else:
+        MOVING_BACKWARDS = False;
+        MOVING_FORWARDS = True;
+    
+    HEADLIGHTS_ON = LINE_DETECTED #control headlights
+
+    #runs things based on state
+    ################################
+    if STOPPED: #run motors
+        cuteBot.motors(0,0)
+    elif TURNING_LEFT:
+        cuteBot.motors(0,90)
+    elif TURNING_RIGHT:
+        cuteBot.motors(90,0)
+    elif MOVING_FORWARDS:
+        cuteBot.motors(90,90)
+    elif MOVING_BACKWARDS:
+        cuteBot.motors(-90,-90)
+
+    if HEADLIGHTS_ON: #run headlights
+        cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 255, 255, 0)
+    else:
+        cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 0, 0, 0)
+    
+
+
+
+```
+
+
 ## Cutebot Systems Check Code
 ```python
 # Cutebot Systems Check
