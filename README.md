@@ -25,24 +25,17 @@ MOVE_BACK = False
 
 
 
-def default_motion_states():
-    MOVING_FORWARDS = True
-    MOVING_BACKWARDS = False
-    STOPPED = False
-    MOVING_BACKWARDS = False
-    TURNING_LEFT = False
-    TURNING_RIGHT = False
 
 while True:
     #update sensors
     ##############################
     CURRENT_TIME = input.running_time() #update time
-    DEBRIS_DETECTED = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS)<10
+    DEBRIS_DETECTED = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS)<5
     LINE_DETECTED = cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)# detects white ground
 
     #updates the state of the robot
     ###############################
-    #things that should run all the time that are not related to motors
+    #things that should run all the time
     HEADLIGHTS_ON = LINE_DETECTED #control headlights
     MOVE_BACK = DEBRIS_DETECTED #move back when debris
 
@@ -53,20 +46,27 @@ while True:
         #you do not need to mess with the time
         #these are either based on sensor states or are just set here.
         
-        #<code default behavior here>
+        MOVING_FORWARDS = True
+        MOVING_BACKWARDS = False
+        STOPPED = False
+        MOVING_BACKWARDS = False
+        TURNING_LEFT = False
+        TURNING_RIGHT = False
 
         #synchronous actions
         #these run when the action is triggered
         #they will block the rest of the code in this while loop from running
         #you can set how long they run for with ACTION_RUN_TIME
         #they must being with ACTION_START_TIME = input.running_time()
+        #set the action to false when it is done
+        #then either trigger another action, or do nothing and return to default
         if MOVE_BACK: 
             ACTION_START_TIME = input.running_time()
             ACTION_RUN_TIME = 500; #goes backwards for half a second
             MOVING_BACKWARDS = True;
             MOVING_FORWARDS = False;
+            MOVE_BACK = False; #done moving backwards
             TURN_90 = True; #turn 90 degrees after going backwards
-            default_motion_states()
             break
         if TURN_90:
             ACTION_START_TIME = input.running_time()
@@ -75,7 +75,6 @@ while True:
             MOVING_FORWARDS = False;
             TURNING_LEFT = True;
             TURN_90 = False; #we are done turning
-            default_motion_states()
             break
         break
     
