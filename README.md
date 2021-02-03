@@ -30,7 +30,7 @@ while True:
     #update sensors
     ##############################
     CURRENT_TIME = input.running_time() #update time
-    DEBRIS_DETECTED = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS)<5
+    DEBRIS_DETECTED = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS)<10
     LINE_DETECTED = cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)# detects white ground
 
     #updates the state of the robot
@@ -98,7 +98,7 @@ while True:
     else:
         cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 0, 0, 0)
     
-    
+    basic.pause(70)
 ```
 
 
