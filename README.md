@@ -42,7 +42,7 @@ while True:
 
     #updates the state of the robot
     ###############################
-    #things that should run all the time
+    #things that should run all the time that are not related to motors
     HEADLIGHTS_ON = LINE_DETECTED #control headlights
     MOVE_BACK = DEBRIS_DETECTED #move back when debris
 
