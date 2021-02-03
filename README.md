@@ -39,7 +39,9 @@ while True:
     
     while (CURRENT_TIME-ACTION_START_TIME)>ACTION_RUN_TIME:
         #set default actions here
-        #example, if line detected, turn, otherwise go straight.
+        #example: if line detected, turn, otherwise go straight.
+        #for default actions, you do not need to mess with the time
+        #these are either based on sensor states or are just set here.
         
         #synchronous actions
         if DEBRIS_DETECTED: 
