@@ -1,5 +1,59 @@
 # Microbit
 
+## Cutebot Docs
+
+### Ultrasonic Sensor
+```python
+distance = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS) #gets distance in centimeters
+```
+
+### Spinning Motors
+```python
+cuteBot.motors(100,100) #forward at full speed
+cuteBot.motors(0,0) #stop
+cuteBot.motors(-100,-100) #backwards at full speed
+cuteBot.motors(100,0) #turn right at full speed
+cuteBot.motors(0,100) #turn left at full speed
+cuteBot.motors(100,-100) #turn right in place at full speed
+cuteBot.motors(-100,100) #turn left in place at full speed
+```
+
+### Headlights
+Mix red, green, and blue to get any color. 255 is the brighest value, 0 means no light
+```python
+cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, <red>, <green>, <blue>)
+```
+Red light:
+```python
+cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 255, 0, 0)
+```
+
+Purple light:
+```python
+cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 255, 0, 255)
+```
+
+Turn lights off:
+```python
+cuteBot.singleheadlights(cuteBot.RGBLights.RGB_L, 0, 0, 0)
+```
+
+### Buzzer
+Play a frequency in Hertz:
+```python
+music.play_tone(<hertz>, <time in milliseconds>)
+```
+Play a 3000 Hertz tone for half a second:
+```python
+music.play_tone(3000, 500)
+```
+
+Set volume from 0-255:
+```python
+music.set_volume(255) #max volume
+```
+
+
 ## Cutebot Code Structure Code
 
 ```python
