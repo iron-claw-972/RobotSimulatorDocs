@@ -55,18 +55,47 @@ music.set_volume(255) #max volume
 
 ### Light Sensor
 There are two light sensors, one of the left and one on the right. You can check when the light sensors are activated (when they sense white) with this code. They will be true when white is sensed (execpt the last one checks when no white is sensed).
+
+```python
 bothSensed = cuteBot.tracking(cuteBot.TrackingState.L_R_LINE)
 rightSensed = cuteBot.tracking(cuteBot.TrackingState.L_UNLINE_R_LINE)
 leftSensed = cuteBot.tracking(cuteBot.TrackingState.L_LINE_R_UNLINE)
 noneSensed = cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)
 
+```
 If you want to have it so the variables are true when it senses black, you can use not:
+
+```python
 bothSensed = not cuteBot.tracking(cuteBot.TrackingState.L_R_LINE)
 rightSensed = not cuteBot.tracking(cuteBot.TrackingState.L_UNLINE_R_LINE)
 leftSensed = not cuteBot.tracking(cuteBot.TrackingState.L_LINE_R_UNLINE)
 noneSensed = not cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)
+```
 
-## Cutebot Code Structure Code
+### How to drive
+First, you should use a while True loop. Then you can set your motor values.
+
+```python
+while True:
+    cuteBot.motors(100,100) #forward at full speed
+
+```
+
+You can also drive in different ways depending on sensors. In this program, our robot will go forward until it finds an obstacle. When there is something closer than 15cm to it, it will turn in place until it no longer sees it, and then continue driving forward.
+
+```python
+while True:
+    distance = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS) #gets distance in centimeters
+    if distandce<15:
+        cuteBot.motors(-100,100) #turn in place
+    else:
+        cuteBot.motors(100,100) #go forward
+
+```
+
+
+
+## Cutebot Code Structure Code (advanced)
 
 ```python
 
