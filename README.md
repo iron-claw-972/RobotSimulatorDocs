@@ -113,8 +113,8 @@ LINE_DETECTED = False
 BEEPING = False
 HEADLIGHTS_ON = False
 CURRENT_TIME = input.running_time()
-ACTION_START_TIME = 0;
-ACTION_RUN_TIME = 0;
+ACTION_START_TIME = 0
+ACTION_RUN_TIME = 0
 
 #synchronous actions
 TURN_90 = False
