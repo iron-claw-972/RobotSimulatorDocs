@@ -159,19 +159,19 @@ while True:
         #then either trigger another action, or do nothing and return to default
         if MOVE_BACK: 
             ACTION_START_TIME = input.running_time()
-            ACTION_RUN_TIME = 500; #goes backwards for half a second
-            MOVING_BACKWARDS = True;
-            MOVING_FORWARDS = False;
-            MOVE_BACK = False; #done moving backwards
-            TURN_90 = True; #turn 90 degrees after going backwards
+            ACTION_RUN_TIME = 500 #goes backwards for half a second
+            MOVING_BACKWARDS = True
+            MOVING_FORWARDS = False
+            MOVE_BACK = False #done moving backwards
+            TURN_90 = True #turn 90 degrees after going backwards
             break
         if TURN_90:
             ACTION_START_TIME = input.running_time()
-            ACTION_RUN_TIME = 500; #turns for half a second
-            MOVING_BACKWARDS = False;
-            MOVING_FORWARDS = False;
-            TURNING_LEFT = True;
-            TURN_90 = False; #we are done turning
+            ACTION_RUN_TIME = 500 #turns for half a second
+            MOVING_BACKWARDS = False
+            MOVING_FORWARDS = False
+            TURNING_LEFT = True
+            TURN_90 = False #we are done turning
             break
         break
     
