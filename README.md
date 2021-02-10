@@ -78,6 +78,7 @@ First, you should use a while True loop. Then you can set your motor values.
 ```python
 while True:
     cuteBot.motors(100,100) #forward at full speed
+    basic.pause(70) #wait 1/10th of a second. will keep driving during this time.
 
 ```
 
@@ -90,6 +91,7 @@ while True:
         cuteBot.motors(-100,100) #turn in place
     else:
         cuteBot.motors(100,100) #go forward
+    basic.pause(70) #give the distance sensor a small break. will keep doing what it was doing before during this time
 
 ```
 
