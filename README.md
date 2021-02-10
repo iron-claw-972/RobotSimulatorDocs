@@ -53,6 +53,18 @@ Set volume from 0-255:
 music.set_volume(255) #max volume
 ```
 
+### Light Sensor
+There are two light sensors, one of the left and one on the right. You can check when the light sensors are activated (when they sense white) with this code. They will be true when white is sensed (execpt the last one checks when no white is sensed).
+bothSensed = cuteBot.tracking(cuteBot.TrackingState.L_R_LINE)
+rightSensed = cuteBot.tracking(cuteBot.TrackingState.L_UNLINE_R_LINE)
+leftSensed = cuteBot.tracking(cuteBot.TrackingState.L_LINE_R_UNLINE)
+noneSensed = cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)
+
+If you want to have it so the variables are true when it senses black, you can use not:
+bothSensed = not cuteBot.tracking(cuteBot.TrackingState.L_R_LINE)
+rightSensed = not cuteBot.tracking(cuteBot.TrackingState.L_UNLINE_R_LINE)
+leftSensed = not cuteBot.tracking(cuteBot.TrackingState.L_LINE_R_UNLINE)
+noneSensed = not cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE)
 
 ## Cutebot Code Structure Code
 
