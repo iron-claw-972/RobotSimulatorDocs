@@ -54,7 +54,7 @@ music.set_volume(255) #max volume
 ```
 
 ### Light Sensor
-There are two light sensors, one of the left and one on the right. You can check when the light sensors are activated (when they sense white) with this code. They will be true when white is sensed (execpt the last one checks when no white is sensed).
+There are two light sensors, one of the left and one on the right. These sensors can be used to detect lines by detecting light or dark colored surfaces. When a dark suface is detected, the LEDs above these sensor will light up blue. When a light surface is detected, these LEDs will be off. You can check when the light sensors are activated (when they sense white) with this code. They will be true when white is sensed (except the last one checks when no white is sensed).
 
 ```python
 bothSensed = cuteBot.tracking(cuteBot.TrackingState.L_R_LINE)
@@ -87,7 +87,7 @@ You can also drive in different ways depending on sensors. In this program, our 
 ```python
 while True:
     distance = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS) #gets distance in centimeters
-    if distandce<15:
+    if distance<15:
         cuteBot.motors(-100,100) #turn in place
     else:
         cuteBot.motors(100,100) #go forward
