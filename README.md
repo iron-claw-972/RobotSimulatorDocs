@@ -4,7 +4,7 @@
 
 ### Mostly Working Random-turning Strategy Code
 
-```
+```python
 object_detected = False #stores whether the cutebot has the cube
 sonar = 0 #stores distance sensor measurements in centimeters
 
