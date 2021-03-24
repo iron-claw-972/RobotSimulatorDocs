@@ -2,6 +2,33 @@
 
 ## Cutebot Docs
 
+### Mostly Working Random-turning Strategy Code
+
+```
+object_detected = False #stores whether the cutebot has the cube
+sonar = 0 #stores distance sensor measurements in centimeters
+
+while True:
+    if object_detected:#if the cutebot detects the cube, then drive forward and don't stop.
+        cuteBot.motors(70,70) 
+    else: #otherwise, either we will be turning if there is a line, or going forward
+        sonar = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS) #update distance sensor readings
+        if cuteBot.tracking(cuteBot.TrackingState.L_R_LINE): #if the cutebot detects a line...
+            basic.pause(20) #for 30 milliseconds
+            while not cuteBot.tracking(cuteBot.TrackingState.L_R_UNLINE):
+                cuteBot.motors(30,-50) #turn cutebot until it is off of the line
+            basic.pause(randint(200, 600)) #continue turning for a small random amount of time
+            cuteBot.motors(0,0)
+        else: #if the cutebot doesn't detect a line...
+            cuteBot.motors(50, 50) #go forward and continue searching
+        
+        if sonar < 20 and sonar > 2: #if the distance is greater than 2cm and less than 20cm then we have the cube
+            object_detected = True
+
+    basic.pause(20) #loop delay time 20 milliseconds
+
+```
+
 ### Ultrasonic Sensor
 ```python
 distance = cuteBot.ultrasonic(cuteBot.SonarUnit.CENTIMETERS) #gets distance in centimeters
