@@ -3,8 +3,8 @@
 ## Cutebot Docs
 
 
-### Completely unrelated cutebot tapdancing code
-you can change the beat that it tap dances to in the note_list
+### Completely Unrelated Cutebot Tapdancing Code
+you can change the beat that it tap dances to in the note_list, and make sure to run it on a hard surface.
 ```python
 music.set_volume(60)
 def note(power):
