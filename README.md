@@ -23,7 +23,7 @@ note_list = [60,43,60,43,60,43,43,43]
 while True:
     for val in note_list:
         note(val)
-``
+```
 
 ### Mostly Working Random-turning Strategy Code
 
