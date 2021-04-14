@@ -2,6 +2,29 @@
 
 ## Cutebot Docs
 
+
+### Completely unrelated cutebot tapdancing code
+you can change the beat that it tap dances to in the note_list
+```python
+music.set_volume(60)
+def note(power):
+    cuteBot.motors(-power,-power)
+    basic.pause(power+20)
+    music.ring_tone(power*10)
+    cuteBot.motors(power,power)
+    basic.pause(power+20)
+    cuteBot.motors(0,0)
+    while (cuteBot.tracking(cuteBot.TrackingState.L_R_line)):
+        basic.pause(3)
+
+note_list = [60,43,60,43,60,43,43,43]
+
+
+while True:
+    for val in note_list:
+        note(val)
+``
+
 ### Mostly Working Random-turning Strategy Code
 
 ```python
